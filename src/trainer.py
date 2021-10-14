@@ -47,7 +47,7 @@ class ModelTrainer:
         self.best_model_wts = None
         self.checkpoint = None  # last model and optimizer weights
 
-    def train_model(self,log_dir):
+    def train_model(self):
 
         if self.device.type == 'cpu':
             print('Start training the model on CPU')
