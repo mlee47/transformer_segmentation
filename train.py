@@ -1,3 +1,4 @@
+
 import torch
 from torch.utils.data import DataLoader
 import numpy as np
@@ -5,6 +6,7 @@ import nibabel as nib
 import os
 import random
 import torch.backends.cudnn
+import argparse
 
 torch.backends.cudnn.benchmark = True
 random_seed = 77
@@ -28,16 +30,24 @@ import src.metrics as metrics_2
 
 def run(): #training
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train_dataset', type=str, default='./dataset/train_data/train', help='train dataset path')
+    parser.add_argument('--val_dataset', type=str, default='./dataset/train_data/val', help='validations dataset path')
+    parser.add_argument('--result', type=str, default='../result', help='save result path')
+    parser.add_argument('--n_epochs', type=int, default = 100, help='number of epochs')
+
+    args = parser.parse_args()
+
     torch.multiprocessing.freeze_support()
-    path_to_train_data = './dataset/train_data/train'
-    path_to_val_data = './dataset/train_data/val'
-    path_to_save_dir = '../result'
+    path_to_train_data = args.train_dataset
+    path_to_val_data = args.val_dataset
+    path_to_save_dir = args.result
 
     train_batch_size = 1
     val_batch_size = 1
     num_workers = 0
     lr = 1e-3  # initial learning rate
-    n_epochs = 100  # number of training epochs (300 was used in the paper)
+    n_epochs = args.n_epochs  # number of training epochs (300 was used in the paper)
     n_cls = 2  # number of classes to predict (background and tumor)
     in_channels = 2  # number of input modalities
     n_filters = 4  # number of filters after the input (24 was used in the paper)
@@ -91,7 +101,5 @@ def run(): #training
     trainer_.train_model()
     trainer_.save_results(path_to_dir=path_to_save_dir)
 
-
 if __name__ =='__main__':
     run()
-
