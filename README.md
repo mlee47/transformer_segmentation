@@ -1,2 +1,12 @@
 # Segmentation Medical Image with Transformer
-데이터 구글링크 : https://drive.google.com/file/d/1NGlzQZNuxYSopAtIQh9lI2YfawMxKpVC/view?usp=sharing
+
+## Dataset
+https://www.aicrowd.com/challenges/miccai-2021-hecktor
+
+## How to Train:
+```
+python train.py --train_dataset 'your train dataset path' --val_dataset 'your train dataset path' \
+                --result 'save result path' --n_epochs 'number of epochs(int)'
+```
+  
+ 
